@@ -3,6 +3,9 @@
 # Prebuilt Class To Let User Choose From A List
 # View Examples For Help
 
+# TODO: Choose Between Single And Muitlple Selections
+# TODO: Add Instructions To CLI
+
 # Imports
 import os
 import sys
