@@ -47,6 +47,9 @@ class SelectInput():
 
     # Function INIT
     # To Setup The Class
+    # Variables
+    # header as str;  String To Put In Frount Of The List
+    # choices as arr; Array Of Choices For The User To Pick From
     def __init__(self, **kwargs):
 
         # Load The Variables Into The Class
