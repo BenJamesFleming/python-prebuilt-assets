@@ -21,18 +21,37 @@ class SelectInput():
     # [END]
 
     # Config Variables
-    # preFormat as str;
+    # preFormat as str;     The Format For The Output
+    # clear as fuc;         Function To Clear The CLI
+    # itemTemplates as arr; Array Of Item Templates
+    # confirmString as str; The Confirm String To Use
     # [START]
     preFormat = ">> "
     clear = lambda: os.system('cls' if os.name == 'nt' else 'clear') # fuc; Clear Command Line
+    itemTemplates = {
+     "selected": "{} <--\n",
+     "deselected": "{}\n"
+    }
+    confirmString = "Confirm"
     # [END]
+
+    # User Variables
+    header = ""
+    choices = []
 
     # Function Variables
     selectedIndex = []
     formatLength = 0
     output = ""
 
-    def __init__(self):
+    # Function INIT
+    # To Setup The Class
+    def __init__(self, **kwargs):
+
+        # Load The Variables Into The Class
+        self.header = kwargs.get("header", None)
+        self.choices = kwargs.get("choices", [])
+
         return
 
     # Function Format String
@@ -47,20 +66,23 @@ class SelectInput():
     # To Let User Select From List
     # Variables
     # choices as arr; Array of Choices to Display
-    def select(self, choices, **kwargs):
+    def select(self, **kwargs):
 
         # Reset Variables
         self.selectedIndex = 0
-        self.selectedArray = []
         self.formatLength = 0
-        self.output = ""
+
+        # Get New Choices
+        self.choices = kwargs.get("choices", self.choices)
 
         while True:
 
-            self.output = ""
+            # Reset Ouput
+            # And Add Header If Given
+            self.output = (self.header != None ? str(self.header) : "")
 
             # Get Format Length
-            for choice in choices:
+            for choice in self.choices:
                 self.formatLength = max(self.formatLength, len(self.formatString(choice)))
 
             # Build Output Message
@@ -74,9 +96,9 @@ class SelectInput():
             for choice in choices:
 
                 # Get Right Template For Output Color
-                template = "{}\n"
+                template = self.itemTemplates["deselected"]
                 if forIndex == self.selectedIndex:
-                    template = "{} <--\n"
+                    template = self.itemTemplates["selected"]
 
                 # Add To Output Message
                 line = self.formatString(choice, formatLength=self.formatLength)
@@ -95,8 +117,7 @@ class SelectInput():
                 forIndex += 1
 
             # Add Confirm To End Of Output
-            string = "Confirm"
-            self.output += (" "*int(self.formatLength+5))+string
+            self.output += (" "*int(self.formatLength+5))+str(self.confirmString != None ? self.confirmString : "Confirm")
             if self.selectedIndex >= len(choices):
                 self.output += " <--"
             # [END]
@@ -119,7 +140,7 @@ class SelectInput():
                         self.selectedArray.append(self.selectedIndex)
                     break
                 elif key == b'\xe0': # Special Keys (arrows, f keys, ins, del, etc.)
-                    key = msvcrt.getch()
+                    key=msvcrt.getch()
                     if key == b'P': # Down Arrow
                         # Change Selected Item
                         self.selectedIndex = max(0, min(len(choices), self.selectedIndex+1))
