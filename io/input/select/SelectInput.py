@@ -1,8 +1,14 @@
+# © Ben Fleming
+# SelectInput Class
+# Prebuilt Class To Let User Choose From A List
+# View Examples For Help
+
 # Imports
 import os
 import sys
 import msvcrt
 
+# Select Import Class
 class SelectInput():
 
     # Global Variables
@@ -87,7 +93,9 @@ class SelectInput():
 
             # Add Confirm To End Of Output
             string = "Confirm"
-            self.output += "\n"+(" "*int(self.formatLength-len(string)))+string
+            self.output += (" "*int(self.formatLength+5))+string
+            if self.selectedIndex >= len(choices):
+                self.output += " <--"
             # [END]
 
 
