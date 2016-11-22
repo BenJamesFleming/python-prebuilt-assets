@@ -40,12 +40,16 @@ class SelectInput():
     choices = []
 
     # Function Variables
-    selectedIndex = []
+    selectedIndex = 0
+    selectedArray = []
     formatLength = 0
     output = ""
 
     # Function INIT
     # To Setup The Class
+    # Variables
+    # header as str;  String To Put In Frount Of The List
+    # choices as arr; Array Of Choices For The User To Pick From
     def __init__(self, **kwargs):
 
         # Load The Variables Into The Class
@@ -79,7 +83,7 @@ class SelectInput():
 
             # Reset Ouput
             # And Add Header If Given
-            self.output = (self.header != None ? str(self.header) : "")
+            self.output = (self.header if self.header != None else "")+"\n"
 
             # Get Format Length
             for choice in self.choices:
@@ -93,7 +97,7 @@ class SelectInput():
             # [START]
             forIndex = 0
             line = ""
-            for choice in choices:
+            for choice in self.choices:
 
                 # Get Right Template For Output Color
                 template = self.itemTemplates["deselected"]
@@ -117,8 +121,8 @@ class SelectInput():
                 forIndex += 1
 
             # Add Confirm To End Of Output
-            self.output += (" "*int(self.formatLength+5))+str(self.confirmString != None ? self.confirmString : "Confirm")
-            if self.selectedIndex >= len(choices):
+            self.output += (" "*int(self.formatLength+5))+str(self.confirmString if self.confirmString != None else "Confirm")
+            if self.selectedIndex >= len(self.choices):
                 self.output += " <--"
             # [END]
 
@@ -126,7 +130,7 @@ class SelectInput():
             # Clear The CLI & Print Out The List
             # [START]
             clear()
-            print(self.output+"\n\r")
+            print(self.output+"\n")
             # [END]
 
             # Get User Input
@@ -134,7 +138,7 @@ class SelectInput():
                 key=msvcrt.getch()
                 if key == b'\r': # Enter Keys
                     # Check If On Confirm Button
-                    if self.selectedIndex >= len(choices):
+                    if self.selectedIndex >= len(self.choices):
                         return self.selectedArray
                     else:
                         self.selectedArray.append(self.selectedIndex)
@@ -143,9 +147,9 @@ class SelectInput():
                     key=msvcrt.getch()
                     if key == b'P': # Down Arrow
                         # Change Selected Item
-                        self.selectedIndex = max(0, min(len(choices), self.selectedIndex+1))
+                        self.selectedIndex = max(0, min(len(self.choices), self.selectedIndex+1))
                         break
                     elif key == b'H': # Up Arrow
                         # Change Selected Item
-                        self.selectedIndex = max(0, min(len(choices)-1, self.selectedIndex-1))
+                        self.selectedIndex = max(0, min(len(self.choices)-1, self.selectedIndex-1))
                         break
