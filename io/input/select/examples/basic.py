@@ -4,9 +4,8 @@ sys.path.append("../")
 from SelectInput import SelectInput
 
 # Basic Variables
+# These Are The Choices That The User Will Have
 choices = ["Choice #1", "Choice #2", "Choice Number Three", "Choice Four"]
-
-print("Here Are Your Choices")
 
 # Get The Users Answers
 # This Returns An Array, With The Indexs Of The Selected Choices
