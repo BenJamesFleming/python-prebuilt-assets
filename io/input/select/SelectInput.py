@@ -16,7 +16,6 @@ class SelectInput():
 
     # Global Variables
     # [START]
-    global preFormat
     global clear
     # [END]
 
@@ -64,7 +63,7 @@ class SelectInput():
     # string as str;        String to Format
     # formatLength as int;  Length To Format
     def formatString(self, string, **kwargs):
-        return preFormat+string+(" "*(int(kwargs.get("formatLength", "1"))-len(string)))+": "
+        return self.preFormat+string+(" "*(int(kwargs.get("formatLength", "1"))-len(string)))+": "
 
     # Function Select
     # To Let User Select From List
