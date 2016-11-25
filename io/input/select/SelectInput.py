@@ -29,8 +29,8 @@ class SelectInput():
     preFormat = ">> "
     clear = lambda: os.system('cls' if os.name == 'nt' else 'clear') # fuc; Clear Command Line
     itemTemplates = {
-     "selected": "{} {}<--\n",
-     "deselected": "{} {}\n"
+     "selected": "\033[0;30;47m{}\033[0;37;40m\n",
+     "deselected": "{}\n"
     }
     confirmString = "Done"
     # [END]
@@ -110,21 +110,21 @@ class SelectInput():
                 # Check If Current Item Has Been Selected
                 # Add Correct Symbol
                 if forIndex in self.selectedArray:
-                    line += "[■]"
+                    line += "[■]  "
                 else:
-                    line += "[ ]"
+                    line += "[ ]  "
 
                 # Add Line To Output
-                self.output += template.format(line, (" "*int(len(str(self.confirmString))-3)))
+                self.output += template.format(line)
 
                 # Increase For Loop Index By 1
                 forIndex += 1
 
-            # Add Confirm To End Of Output
+            # Add Confirm String To End Of Output
             template = self.itemTemplates["deselected"]
             if self.selectedIndex >= len(self.choices):
                 template = self.itemTemplates["selected"]
-            self.output += template.format((" "*int(self.formatLength+5))+str(self.confirmString), "")
+            self.output += template.format("\n"+preFormat+self.confirmString+"  ")
             # [END]
 
 
